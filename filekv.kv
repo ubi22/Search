@@ -1,0 +1,88 @@
+<sDrawer>:
+
+    orientation: "horizontal"
+    padding: "10dp"
+
+
+MDNavigationLayout:
+
+    ScreenManager:
+        id: screen_manager
+        Screen:
+            name: "scr 1"
+            MDTextField:
+                id: log
+                size_hint_x: None
+                width: "400dp"
+                hint_text: "Login"
+                pos_hint: {"center_x": .5, "center_y": .6}
+            MDTextField:
+                id: pase
+                size_hint_x: None
+                width: "400dp"
+                hint_text: "Password"
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextButton:
+                text: "Войти"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_x": .5, "center_y": .35}
+                on_press:
+                    app.log_in()
+            MDTextButton:
+                text: "Если нет создать"
+                custom_color: 0, 1, 0, 1
+                pos_hint: {"center_x": .5, "center_y": .3}
+                on_press:
+                    app.registration()
+
+        Screen:
+            name: "search"
+            MDTextField:
+                id: poisk
+                hint_text: "Поиск"
+                size_hint: .6, None
+                pos_hint: {"center_x": .5, "center_y": .9}
+
+            MDIconButton:
+                icon: "search-web"
+                pos_hint: {"center_x": .75, "center_y": .9}
+                on_release:
+                    app.dd()
+            BoxLayout:
+                orientation: "vertical"
+                id: ff
+                MDList:
+                    id: create
+                    pos_hint: {"center_x": .5, "center_y": .8}
+
+
+        Screen:
+            name: "admin"
+            MDTextField:
+                hint_text: "Имя преподователя"
+                size_hint: .6, None
+                pos_hint: {"center_x": .5, "center_y": .85}
+
+            MDTextField:
+                hint_text: "День недели"
+                size_hint: .6, None
+                pos_hint: {"center_x": .5, "center_y": .7}
+
+            MDTextField:
+                hint_text: "Время занятий"
+                size_hint: .6, None
+                pos_hint: {"center_x": .5, "center_y": .55}
+
+            MDTextField:
+                hint_text: "Группа"
+                size_hint: .6, None
+                pos_hint: {"center_x": .5, "center_y": .4}
+            MDRectangleFlatIconButton:
+                icon: "content-save"
+                text: "Сохранение"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                line_color: 0, 0, 0, 1
+                icon_color: 1, 0, 0, 1
+
