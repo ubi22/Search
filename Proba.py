@@ -6,7 +6,7 @@ import hashlib
 with sqlite3.connect('search-base.db') as db:
     cursor = db.cursor()
     query = """
-    CREATE TABLE IF NOT EXISTS users(
+    CREATE TABLE IF NOT EXISTS sirt(
         name TEXT,
         time TEXT,
         gr TEXT
@@ -23,14 +23,14 @@ if search == 'Создать':
     time = input('Время ')
     gr = input('Какая группа: ')
     values = [name, time, gr]
-    cursor.execute("INSERT INTO users(name,time, gr) VALUES(?,?,?)", values)
+    cursor.execute("INSERT INTO sirt(name,time, gr) VALUES(?,?,?)", values)
     print("Cоздано")
 
 
 
-# cursor.execute('SELECT * FROM  users')
-# three_results = cursor.fetchall()
-# print(three_results)
+cursor.execute('SELECT * FROM  users')
+three_results = cursor.fetchall()
+print(three_results)
 if search == 'Поиск':
     db = sqlite3.connect("search-base.db")
     cursor = db.cursor()

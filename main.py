@@ -12,6 +12,7 @@ from kivymd.icon_definitions import md_icons
 from kivy.properties import StringProperty
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, MDList
+from kivymd.uix.button import MDRaisedButton
 from kivymd.font_definitions import fonts
 from kivymd.icon_definitions import md_icons
 from kivymd.uix.card import MDCardSwipe
@@ -53,6 +54,9 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang.builder import Builder
 Window.size = (480,800)
 
+
+
+
 def md5sum(value):
     return hashlib.md5(value.encode()).hexdigest()
 
@@ -68,31 +72,26 @@ with sqlite3.connect('database.db') as db:
 
     cursor.executescript(query)
 
-class DemoPage(Screen):
-    pass
+with sqlite3.connect('search-base.db') as fut:
+    db = fut.cursor()
+    table = """
+    CREATE TABLE IF NOT EXISTS search(
+        name TEXT,
+        time TEXT,
+        gr TEXT
+)
+    """
+    db.executescript(table)
+
 
 class sDrawer(BoxLayout):
     pass
-
 
 class ClickableTextFieldRound(MDRelativeLayout):
     text = StringProperty()
     hint_text = StringProperty()
 
 class Kniga(MDApp):
-    theme_cls = ThemeManager()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.data_tables = None
-
-    def createButton(self, a, f, d):
-        conten = sDrawer()
-        conten.add_widget(ThreeLineListItem(text=f'{f}',secondary_text=f"{a}",tertiary_text=f"{d}"))
-        self.root.ids.create.add_widget(conten)
-
-
-
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Orange"
@@ -125,7 +124,6 @@ class Kniga(MDApp):
     def log_in(self):
         login = self.root.ids.log.text
         password = self.root.ids.pase.text
-        self.create_data()
         if login == 'admin':
             if password == '1234':
                 toast("Здраствуйте Admin")
@@ -148,6 +146,47 @@ class Kniga(MDApp):
             finally:
                 cursor.close()
                 db.close()
+
+    def createbase(self):
+        name = self.root.ids.name.text
+        time = self.root.ids.time.text
+        gr = self.root.ids.gr.text
+        try:
+            fut = sqlite3.connect("search-base.db")
+            searchs = fut.cursor()
+            values = [name, time, gr]
+            searchs.execute("INSERT INTO search(name,time, gr) VALUES(?,?,?)", values)
+            print(values)
+            fut.commit()
+            self.root.ids.screen_manager.current = "admin"
+        except sqlite3.Error as e:
+            print("Error", e)
+
+    def delbase(self):
+        try:
+            fut = sqlite3.connect("search-base.db")
+            searchs = fut.cursor()
+            rut = self.root.ids.delete.text
+            searchs.execute(f'''DELETE FROM search WHERE name = '{rut}';''')
+            fut.commit()
+            self.root.ids.screen_manager.current = "admin"
+        except sqlite3.Error as error:
+            print("Ошибка при работе с SQLite", error)
+
+    def screen(self, sed):
+        self.root.ids.screen_manager.current = sed
+
+
+
+
+
+    def search(self):
+        fut = sqlite3.connect("search-base.db")
+        searchs = fut.cursor()
+        poisk = self.root.ids.poisk.text
+        searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
+        three_results = searchs.fetchall()
+        print(three_results)
 
 
 Kniga().run()
