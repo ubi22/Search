@@ -162,6 +162,7 @@ class Kniga(MDApp):
         except sqlite3.Error as e:
             print("Error", e)
 
+
     def delbase(self):
         try:
             fut = sqlite3.connect("search-base.db")
@@ -177,6 +178,33 @@ class Kniga(MDApp):
         self.root.ids.screen_manager.current = sed
 
 
+
+
+
+    def search(self):
+        fut = sqlite3.connect("search-base.db")
+        searchs = fut.cursor()
+        poisk = self.root.ids.poisk.text
+        searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
+        three_results = searchs.fetchall()
+        print(three_results)
+
+    def delbase(self):
+        try:
+            fut = sqlite3.connect("search-base.db")
+            searchs = fut.cursor()
+            rut = self.root.ids.delete.text
+            searchs.execute(f'''DELETE FROM search WHERE name = '{rut}';''')
+            fut.commit()
+            self.root.ids.screen_manager.current = "admin"
+        except sqlite3.Error as error:
+            print("Ошибка при работе с SQLite", error)
+
+    def createscreen(self):
+        self.root.ids.screen_manager.current = "create"
+
+    def deletescreen(self):
+        self.root.ids.screen_manager.current = "delete"
 
 
 

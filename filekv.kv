@@ -96,13 +96,21 @@ MDNavigationLayout:
                 text_color: 1, 1, 1, 1
                 pos_hint: {"center_x": .5, "center_y": .35}
                 on_press:
+<<<<<<< HEAD
                     app.screen("create")
+=======
+                    app.createscreen()
+>>>>>>> origin/master
             MDTextButton:
                 text: "Удалить"
                 custom_color: 0, 1, 0, 1
                 pos_hint: {"center_x": .5, "center_y": .3}
                 on_press:
+<<<<<<< HEAD
                     app.screen("delete")
+=======
+                    app.deletescreen()
+>>>>>>> origin/master
 
 
 
@@ -112,12 +120,24 @@ MDNavigationLayout:
                 id: delete
                 hint_text: "Что удалить?"
                 size_hint: .6, None
+<<<<<<< HEAD
                 pos_hint: {"center_x": .5, "center_y": .9}
 
             MDTextButton:
                 icon: "content-save"
                 text: "Удалить"
                 pos_hint: {"center_x": .5, "center_y": .5}
+=======
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDRectangleFlatIconButton:
+                icon: "content-save"
+                text: "Удалить"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                line_color: 0, 0, 0, 1
+                icon_color: 1, 0, 0, 1
+>>>>>>> origin/master
                 on_release:
                     app.delbase()
 
@@ -127,7 +147,11 @@ MDNavigationLayout:
                 id: name
                 hint_text: "Имя преподователя"
                 size_hint: .6, None
+<<<<<<< HEAD
                 pos_hint: {"center_x": .5, "center_y": .90}
+=======
+                pos_hint: {"center_x": .5, "center_y": .85}
+>>>>>>> origin/master
 
             MDTextField:
                 id: time
@@ -139,6 +163,7 @@ MDNavigationLayout:
                 id: gr
                 hint_text: "Группа"
                 size_hint: .6, None
+<<<<<<< HEAD
                 pos_hint: {"center_x": .5, "center_y": .70}
             MDTextButton:
                 text: "Создать"
@@ -154,3 +179,15 @@ MDNavigationLayout:
                 MDList:
                     MDTextButton:
                         text: "Имя"
+=======
+                pos_hint: {"center_x": .5, "center_y": .4}
+            MDRectangleFlatIconButton:
+                icon: "content-save"
+                text: "Создать"
+                theme_text_color: "Custom"
+                text_color: 0, 0, 0, 1
+                line_color: 0, 0, 0, 1
+                icon_color: 1, 0, 0, 1
+                on_release:
+                    app.createbase()
+>>>>>>> origin/master
