@@ -66,7 +66,10 @@ with sqlite3.connect('database.db') as db:
     CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY,
         login VARCHAR(15),
-        password VARCHAR(20)
+        password VARCHAR(20),
+        name TEXT,
+        age TEXT
+        
 )
     """
 
@@ -91,15 +94,59 @@ class ClickableTextFieldRound(MDRelativeLayout):
     text = StringProperty()
     hint_text = StringProperty()
 
-class Kniga(MDApp):
+class Schedule(MDApp):
+    icon = "/Search-master/КвантИконка.jpg"
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Orange"
         return Builder.load_file("filekv.kv")
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Window.bind(on_keyboard=self.events)
+        self.manager_open = False
+        self.file_manager = MDFileManager(
+            exit_manager=self.exit_manager,
+            select_path=self.select_path,
+            preview=True,
+        )
+
+
+    def file_manager_open(self):
+        self.file_manager.show('/Search-master/Икон/')  # output manager to the screen
+        self.manager_open = True
+
+    def select_path(self, path):
+        '''It will be called when you click on the file name
+        or the catalog selection button.
+
+        :type path: str;
+        :param path: path to the selected directory or file;
+        '''
+
+        self.exit_manager()
+        self.root.ids.cin.icon = f'{path}'
+        self.root.ids.acc.icon = f'{path}'
+
+    def exit_manager(self, *args):
+        '''Called when the user reaches the root of the directory tree.'''
+
+        self.manager_open = False
+        self.file_manager.close()
+
+    def events(self, instance, keyboard, keycode, text, modifiers):
+        '''Called when buttons are pressed on the mobile device.'''
+
+        if keyboard in (1001, 27):
+            if self.manager_open:
+                self.file_manager.back()
+        return True
+
     def registration(self):
         login = self.root.ids.log.text
         password = self.root.ids.pase.text
+        name = self.root.ids.names.text
+        age = self.root.ids.age.text
         try:
             db = sqlite3.connect("database.db")
             cursor = db.cursor()
@@ -107,10 +154,15 @@ class Kniga(MDApp):
             db.create_function("md5", 1, md5sum)
 
             cursor.execute("SELECT login FROM users WHERE login = ?", [login])
+
+
+
+
             if cursor.fetchone() is None:
-                values = [login, password]
-                cursor.execute("INSERT INTO users(login, password) VALUES(?,md5(?))", values)
+                values = [login, password, name, age]
+                cursor.execute("INSERT INTO users(login, password, name, age) VALUES(?,md5(?),?,?)", values)
                 toast("Создали акаунт")
+                self.root.ids.screen_manager.current = "search"
                 db.commit()
             else:
                 toast("Tакой логин уже есть")
@@ -122,14 +174,16 @@ class Kniga(MDApp):
             db.close()
 
     def log_in(self):
-        login = self.root.ids.log.text
-        password = self.root.ids.pase.text
+        login = self.root.ids.login.text
+        password = self.root.ids.password.text
         if login == 'admin':
             if password == '1234':
                 toast("Здраствуйте Admin")
                 self.root.ids.screen_manager.current = "admin"
         else:
             try:
+                db = sqlite3.connect("database.db")
+                cursor = db.cursor()
                 db.create_function("md5", 1, md5sum)
                 cursor.execute("SELECT login FROM users WHERE login = ?", [login])
                 if cursor.fetchone() is None:
@@ -162,7 +216,6 @@ class Kniga(MDApp):
         except sqlite3.Error as e:
             print("Error", e)
 
-
     def delbase(self):
         try:
             fut = sqlite3.connect("search-base.db")
@@ -177,44 +230,30 @@ class Kniga(MDApp):
     def screen(self, sed):
         self.root.ids.screen_manager.current = sed
 
-
-
-
-
-    def search(self):
+    def searchs(self):
         fut = sqlite3.connect("search-base.db")
         searchs = fut.cursor()
-        poisk = self.root.ids.poisk.text
+        poisk = self.root.ids.poisks.text
         searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
         three_results = searchs.fetchall()
-        print(three_results)
+        conten = sDrawer()
+        if len(three_results) == 0:
+            print('Ведите имя')
+        else:
 
-    def delbase(self):
-        try:
-            fut = sqlite3.connect("search-base.db")
-            searchs = fut.cursor()
-            rut = self.root.ids.delete.text
-            searchs.execute(f'''DELETE FROM search WHERE name = '{rut}';''')
-            fut.commit()
-            self.root.ids.screen_manager.current = "admin"
-        except sqlite3.Error as error:
-            print("Ошибка при работе с SQLite", error)
+            for a, b, c in three_results:
 
-    def createscreen(self):
-        self.root.ids.screen_manager.current = "create"
-
-    def deletescreen(self):
-        self.root.ids.screen_manager.current = "delete"
+                conten.add_widget(ThreeLineListItem(text=f'ФИО: {a}', secondary_text=f"Время: {b}", tertiary_text=f"Группа: {c}"))
+                self.root.ids.md_list.add_widget(conten)
 
 
+    def account(self):
+        db = sqlite3.connect("database.db")
+        cursor = db.cursor()
+        a = self.root.ids.login.text
+        cursor.execute(f'''SELECT * FROM users WHERE login LIKE '%{a}%';''')
+        three_results = cursor.fetchall()
+        self.root.ids.nameac.text = f"ФИО: {three_results[0][3]}"
+        self.root.ids.ageac.text = f"Лет: {three_results[0][4]}"
 
-    def search(self):
-        fut = sqlite3.connect("search-base.db")
-        searchs = fut.cursor()
-        poisk = self.root.ids.poisk.text
-        searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
-        three_results = searchs.fetchall()
-        print(three_results)
-
-
-Kniga().run()
+Schedule().run()

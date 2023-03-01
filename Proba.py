@@ -1,64 +1,99 @@
-import sqlite3
-import hashlib
+from kivy.core.window import Window
+from kivy.lang import Builder
+
+from kivymd.app import MDApp
+from kivy.lang import Builder
+from kivy.properties import StringProperty
+from kivy.uix.screenmanager import Screen
+
+from kivymd.icon_definitions import md_icons
+from kivymd.app import MDApp
+from kivymd.uix.list import OneLineIconListItem
 
 
+Builder.load_string(
+    '''
+#:import images_path kivymd.images_path
 
-<<<<<<< HEAD
-with sqlite3.connect('search-base.db') as db:
-    cursor = db.cursor()
-    query = """
-    CREATE TABLE IF NOT EXISTS sirt(
-=======
-with sqlite3.connect('search-base.db') as fut:
-    searchs = fut.cursor()
-    table = """
-    CREATE TABLE IF NOT EXISTS search(
->>>>>>> origin/master
-        name TEXT,
-        time TEXT,
-        gr TEXT
+
+<CustomOneLineIconListItem>:
+
+    IconLeftWidget:
+        icon: root.icon
+
+
+<PreviousMDIcons>:
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+        padding: dp(20)
+
+        MDBoxLayout:
+            adaptive_height: True
+
+            MDIconButton:
+                icon: 'magnify'
+
+            MDTextField:
+                id: search_field
+                hint_text: 'Search icon'
+                on_text: root.set_list_md_icons(self.text, True)
+
+        RecycleView:
+            id: rv
+            key_viewclass: 'viewclass'
+            key_size: 'height'
+
+            RecycleBoxLayout:
+                padding: dp(10)
+                default_size: None, dp(48)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+'''
 )
-    """
-    searchs.executescript(table)
-
-search = input('Действие: ')
-poisk = input('Поиск: ')
-if search == 'Создать':
-    fut = sqlite3.connect("search-base.db")
-    searchs = fut.cursor()
-    name = input('Ведите имя: ')
-    time = input('Время ')
-    gr = input('Какая группа: ')
-    values = [name, time, gr]
-<<<<<<< HEAD
-    cursor.execute("INSERT INTO sirt(name,time, gr) VALUES(?,?,?)", values)
-=======
-    searchs.execute("INSERT INTO search(name,time, gr) VALUES(?,?,?)", values)
->>>>>>> origin/master
-    print("Cоздано")
 
 
-
-<<<<<<< HEAD
-cursor.execute('SELECT * FROM  users')
-three_results = cursor.fetchall()
-print(three_results)
-=======
-
->>>>>>> origin/master
-if search == 'Поиск':
-    fut = sqlite3.connect("search-base.db")
-    searchs = fut.cursor()
-    searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
-    three_results = searchs.fetchall()
-    print(three_results)
+class CustomOneLineIconListItem(OneLineIconListItem):
+    icon = StringProperty()
 
 
-if search == 'Удалить':
-    fut = sqlite3.connect("search-base.db")
-    searchs = fut.cursor()
-    rut = input('Что удалить: ')
-    searchs.execute(f'''DELETE FROM search WHERE name = '{rut}';''')
+class PreviousMDIcons(Screen):
 
-fut.commit()
-fut.close()
+    def set_list_md_icons(self, text="", search=False):
+        '''Builds a list of icons for the screen MDIcons.'''
+
+        def add_icon_item(name_icon):
+            self.ids.rv.data.append(
+                {
+                    "viewclass": "CustomOneLineIconListItem",
+                    "icon": name_icon,
+                    "text": name_icon,
+                    "callback": lambda x: x,
+                }
+            )
+
+        self.ids.rv.data = []
+        for name_icon in md_icons.keys():
+            if search:
+                if text in name_icon:
+                    add_icon_item(name_icon)
+            else:
+                add_icon_item(name_icon)
+
+
+class MainApp(MDApp):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.screen = PreviousMDIcons()
+
+    def build(self):
+        return self.screen
+
+    def on_start(self):
+        self.screen.set_list_md_icons()
+
+
+MainApp().run()
