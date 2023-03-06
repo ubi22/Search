@@ -26,6 +26,7 @@ from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.list import ThreeLineListItem
+from kivymd.utils.fitimage import FitImage
 from kivymd.uix.button import MDFlatButton
 import webbrowser
 from kivymd.uix.button import MDRaisedButton
@@ -79,9 +80,15 @@ with sqlite3.connect('search-base.db') as fut:
     db = fut.cursor()
     table = """
     CREATE TABLE IF NOT EXISTS search(
-        name TEXT,
-        time TEXT,
-        gr TEXT
+        fio TEXT,
+        kvant TEXT,
+        photo TEXT,
+        tipn TEXT,
+        tivt TEXT,
+        ticr TEXT,
+        tich TEXT,
+        tipa TEXT,
+        ticb TEXT
 )
     """
     db.executescript(table)
@@ -94,6 +101,8 @@ class ClickableTextFieldRound(MDRelativeLayout):
     text = StringProperty()
     hint_text = StringProperty()
 
+photo = None
+v = None
 class Schedule(MDApp):
     icon = "/Search-master/КвантИконка.jpg"
     def build(self):
@@ -104,43 +113,63 @@ class Schedule(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         Window.bind(on_keyboard=self.events)
-        self.manager_open = False
-        self.file_manager = MDFileManager(
-            exit_manager=self.exit_manager,
-            select_path=self.select_path,
+        self.manager_opens = False
+        self.file_managers = MDFileManager(
+            exit_manager=self.exit_managers,
+            select_path=self.select_paths,
             preview=True,
         )
 
 
-    def file_manager_open(self):
-        self.file_manager.show('/Search-master/Икон/')  # output manager to the screen
-        self.manager_open = True
+    def file_image(self, b):
+        global v
+        global photo
+        a = "/"
+        d = "/Search-master/Икон/"
+        if b == 1:
+            self.file_managers.show(a)
+            v = 1
+        elif b == 0:
+            self.file_managers.show(d)
+            v = 0
+        self.manager_opens = True
 
-    def select_path(self, path):
+
+    def select_paths(self, path):
+        global v
+        global photo
         '''It will be called when you click on the file name
         or the catalog selection button.
 
         :type path: str;
         :param path: path to the selected directory or file;
         '''
+        if v == 1:
+            self.root.ids.sic.icon = f'{path}'
+            photo = f"{path}"
+        elif v == 0:
+            self.root.ids.cin.icon = f'{path}'
+            self.root.ids.acc.icon = f'{path}'
+        self.exit_managers()
+        print(photo)
 
-        self.exit_manager()
-        self.root.ids.cin.icon = f'{path}'
-        self.root.ids.acc.icon = f'{path}'
 
-    def exit_manager(self, *args):
+
+
+    def exit_managers(self, *args):
         '''Called when the user reaches the root of the directory tree.'''
 
-        self.manager_open = False
-        self.file_manager.close()
+        self.manager_opens = False
+        self.file_managers.close()
 
     def events(self, instance, keyboard, keycode, text, modifiers):
         '''Called when buttons are pressed on the mobile device.'''
 
         if keyboard in (1001, 27):
-            if self.manager_open:
-                self.file_manager.back()
+            if self.manager_opens:
+                self.file_managers.back()
         return True
+
 
     def registration(self):
         login = self.root.ids.log.text
@@ -154,9 +183,6 @@ class Schedule(MDApp):
             db.create_function("md5", 1, md5sum)
 
             cursor.execute("SELECT login FROM users WHERE login = ?", [login])
-
-
-
 
             if cursor.fetchone() is None:
                 values = [login, password, name, age]
@@ -202,14 +228,23 @@ class Schedule(MDApp):
                 db.close()
 
     def createbase(self):
+        global photo
         name = self.root.ids.name.text
-        time = self.root.ids.time.text
-        gr = self.root.ids.gr.text
+        famali = self.root.ids.famali.text
+        otchim = self.root.ids.otchim.text
+        fio = f"{famali} {name} {otchim}"
+        kvant = self.root.ids.kvant.text
+        tipn = self.root.ids.pn.text
+        tivt = self.root.ids.vt.text
+        ticr = self.root.ids.cr.text
+        tich = self.root.ids.cht.text
+        tipa = self.root.ids.pt.text
+        ticb = self.root.ids.sb.text
         try:
             fut = sqlite3.connect("search-base.db")
             searchs = fut.cursor()
-            values = [name, time, gr]
-            searchs.execute("INSERT INTO search(name,time, gr) VALUES(?,?,?)", values)
+            values = [fio, kvant, photo, tipn, tivt, ticr, tich, tipa, ticb]
+            searchs.execute("INSERT INTO search(fio, kvant, photo, tipn, tivt, ticr, tich, tipa, ticb) VALUES(?,?,?,?,?,?,?,?,?)", values)
             print(values)
             fut.commit()
             self.root.ids.screen_manager.current = "admin"
@@ -221,7 +256,7 @@ class Schedule(MDApp):
             fut = sqlite3.connect("search-base.db")
             searchs = fut.cursor()
             rut = self.root.ids.delete.text
-            searchs.execute(f'''DELETE FROM search WHERE name = '{rut}';''')
+            searchs.execute(f'''DELETE FROM search WHERE fio = '{rut}';''')
             fut.commit()
             self.root.ids.screen_manager.current = "admin"
         except sqlite3.Error as error:
@@ -234,16 +269,17 @@ class Schedule(MDApp):
         fut = sqlite3.connect("search-base.db")
         searchs = fut.cursor()
         poisk = self.root.ids.poisks.text
-        searchs.execute(f'''SELECT * FROM search WHERE name LIKE '%{poisk}%';''')
+        searchs.execute(f'''SELECT * FROM search WHERE fio LIKE '%{poisk}%';''')
         three_results = searchs.fetchall()
         conten = sDrawer()
         if len(three_results) == 0:
-            print('Ведите имя')
+            toast('Такого преподователя нет')
+        elif poisk == "":
+            toast('Ведите имя преподователя')
         else:
-
-            for a, b, c in three_results:
-
-                conten.add_widget(ThreeLineListItem(text=f'ФИО: {a}', secondary_text=f"Время: {b}", tertiary_text=f"Группа: {c}"))
+            for a, b, c, d, i, f, g, e, c in three_results:
+                conten.add_widget(FitImage(source=f'{c}',size_hint={0.25, 0.85}))
+                conten.add_widget(ThreeLineListItem(text=f'ФИО: {a}', secondary_text=f"Время: {b}      Группа: {c}", tertiary_text=f"Квантум: {d}"))
                 self.root.ids.md_list.add_widget(conten)
 
 

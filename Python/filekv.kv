@@ -9,19 +9,7 @@ MDNavigationLayout:
         id: screen_manager
         Screen:
             name: "scr 1"
-            MDTextButton:
-                text: "Детский технопарк"
-                font_size: "20sp"
-                pos_hint: {"center_x": .5, "center_y": .9}
 
-            MDTextButton:
-                text: "«Кванториум»"
-                font_size: "50sp"
-
-                pos_hint: {"center_x": .5, "center_y": .85}
-            MDTextButton:
-                text: "г.Новочебоксарск"
-                pos_hint: {"center_x": .5, "center_y": .8}
             MDRaisedButton:
                 text: "Войти"
                 theme_text_color: "Custom"
@@ -181,31 +169,98 @@ MDNavigationLayout:
         Screen:
             name: "create"
             MDIconButton:
+                id: sic
+                icon: "C:/Search-master/Икон/Image.png"
+                pos_hint: {"center_x": .2, "center_y": .85}
+                user_font_size: "70sp"
+                on_release:
+                    app.file_image(1)
+            MDIconButton:
                 icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .9}
+                pos_hint: {"center_x": .1, "center_y": .95}
                 on_release:
                     app.screen("scr 1")
+            MDTextField:
+                id: famali
+                hint_text: "Фамилия преподователя"
+                size_hint: .6, None
+                text: ""
+                pos_hint: {"center_x": .66, "center_y": .9}
             MDTextField:
                 id: name
                 hint_text: "Имя преподователя"
                 size_hint: .6, None
-                pos_hint: {"center_x": .5, "center_y": .90}
-
+                text: ""
+                pos_hint: {"center_x": .66, "center_y": .85}
             MDTextField:
-                id: time
-                hint_text: "Время занятий"
+                id: otchim
+                hint_text: "Отчество преподователя"
                 size_hint: .6, None
-                pos_hint: {"center_x": .5, "center_y": .80}
-
+                pos_hint: {"center_x": .66, "center_y": .80}
+            MDTextButton:
+                text: 'Пн'
+                pos_hint: {"center_x": .2, "center_y": .60}
+            MDTextButton:
+                text: 'Вт'
+                pos_hint: {"center_x": .3, "center_y": .60}
+            MDTextButton:
+                text: 'Ср'
+                pos_hint: {"center_x": .4, "center_y": .60}
+            MDTextButton:
+                text: 'Чт'
+                pos_hint: {"center_x": .5, "center_y": .60}
+            MDTextButton:
+                text: 'Пт'
+                pos_hint: {"center_x": .6, "center_y": .60}
+            MDTextButton:
+                text: 'Сб'
+                pos_hint: {"center_x": .7, "center_y": .60}
+            MDTextButton:
+                text: 'Вс'
+                pos_hint: {"center_x": .8, "center_y": .60}
             MDTextField:
-                id: gr
-                hint_text: "Группа"
+                id: pn
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .2, "center_y": .55}
+            MDTextField:
+                id: vt
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .3, "center_y": .55}
+            MDTextField:
+                id: cr
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .4, "center_y": .55}
+            MDTextField:
+                id: cht
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .5, "center_y": .55}
+            MDTextField:
+                id: pt
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .6, "center_y": .55}
+            MDTextField:
+                id: sb
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .7, "center_y": .55}
+            MDTextField:
+                hint_text: "Гр"
+                size_hint: .05, None
+                pos_hint: {"center_x": .8, "center_y": .55}
+            MDTextField:
+                id: kvant
+                hint_text: "Квантум"
                 size_hint: .6, None
                 pos_hint: {"center_x": .5, "center_y": .70}
             MDTextButton:
                 text: "Создать"
                 size_hint: .6, None
-                pos_hint: {"center_x": .75, "center_y": .60}
+                pos_hint: {"center_x": .75, "center_y": .45}
                 on_release:
                     app.createbase()
 
@@ -217,7 +272,7 @@ MDNavigationLayout:
                 pos_hint: {"center_x": .2, "center_y": .85}
                 user_font_size: "70sp"
                 on_release:
-                    app.file_manager_open()
+                    app.file_image(0)
             MDIconButton:
                 icon: "arrow-left"
                 pos_hint: {"center_x": .1, "center_y": .95}
