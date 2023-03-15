@@ -1,291 +1,495 @@
 <sDrawer>:
 
-    orientation: "horizontal"
-    padding: "10dp"
+<ContentNavigationDrawer>:
+    MDIconButton:
+        user_font_size: "84sp"
+        icon: "/Search-master/Икон/Image.png"
+        pos_hint: {"center_x": .16, "center_y": .94}
 
-MDNavigationLayout:
+    MDFlatButton:
+        text: "Васильев Андрей Витальевич"
+        font_style: "Button"
+        font_size: "19sp"
+        pos_hint: {"center_x": .50, "center_y": .85}
 
-    ScreenManager:
-        id: screen_manager
-        Screen:
-            name: "scr 1"
 
-            MDRaisedButton:
-                text: "Войти"
-                theme_text_color: "Custom"
-                text_color: 1, 1, 1, 1
-                pos_hint: {"center_x": .5, "center_y": .35}
-                on_press:
-                    app.screen("Enter")
-            MDTextButton:
-                text: "Если нет,"
-                custom_color: 0, 1, 0, 1
-                pos_hint: {"center_x": .43, "center_y": .3}
-            MDTextButton:
-                text: "Создать"
-                color: 0, 0, 1, 1
-                pos_hint: {"center_x": .57, "center_y": .3}
-                on_press:
-                    app.screen("Creatbs")
-
-        Screen:
-            name: "Enter"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .9}
-                on_release:
-                    app.screen("scr 1")
-            MDTextField:
-                id: login
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "Login"
-                pos_hint: {"center_x": .5, "center_y": .7}
-            MDTextField:
-                id: password
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "Password"
-                pos_hint: {"center_x": .5, "center_y": .6}
-            MDRaisedButton:
-                text: "Войти"
-                pos_hint: {"center_x": .57, "center_y": .3}
-                on_release:
-                    app.log_in()
-
-        Screen:
-            name: "Creatbs"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .95}
-                on_release:
-                    app.screen("scr 1")
-            MDTextField:
-                id: log
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "Login"
-                pos_hint: {"center_x": .5, "center_y": .9}
-            MDTextField:
-                id: pase
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "Password"
-                pos_hint: {"center_x": .5, "center_y": .8}
-            MDTextField:
-                id: names
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "Name"
-                pos_hint: {"center_x": .5, "center_y": .7}
-            MDTextField:
-                id: age
-                size_hint_x: None
-                width: "400dp"
-                hint_text: "age"
-                pos_hint: {"center_x": .5, "center_y": .6}
-            MDRaisedButton:
-                text: "Создать"
-                pos_hint: {"center_x": .5, "center_y": .3}
-                on_release:
-                    app.registration()
+    MDFlatButton:
+        text: "[size=17]Возраст: 17[/size]"
+        font_style: "Caption"
+        pos_hint: {"center_x": .17, "center_y": .8}
 
 
 
-        Screen:
-            name: "search"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .9}
-                on_release:
-                    app.screen("scr 1")
-            MDTextField:
-                id: poisks
-                hint_text: "Поиск"
-                size_hint: .6, None
-                pos_hint: {"center_x": .51, "center_y": .9}
-
-            MDIconButton:
-                icon: "search-web"
-                pos_hint: {"center_x": .8, "center_y": .902}
-                on_release:
-                    app.searchs()
-            MDIconButton:
-                id: acc
-                icon: "account-circle-outline"
-                user_font_size: "40sp"
-                pos_hint: {"center_x": .9, "center_y": .909}
-                on_release:
-                    app.account()
-                    app.screen("setting")
-            MDList:
-                id: md_list
-                pos_hint: {"center_x": .5, "center_y": .8}
-
-
-        Screen:
-            name: "admin"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .9}
-                on_release:
-                    app.screen("scr 1")
-            MDTextButton:
-                text: "Создать"
-                theme_text_color: "Custom"
-                text_color: 1, 1, 1, 1
-                pos_hint: {"center_x": .5, "center_y": .6}
-                on_press:
-                    app.screen("create")
-            MDTextButton:
-                text: "Удалить"
-                custom_color: 0, 1, 0, 1
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_press:
-                    app.screen("delete")
+    ScrollView:
+<MyTile@SmartTileWithStar>
+    size_hint_y: None
+    height: "240dp"
 
 
 
-        Screen:
-            name: "delete"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .9}
-                on_release:
-                    app.screen("scr 1")
-            MDTextField:
-                id: delete
-                hint_text: "Что удалить?"
-                size_hint: .6, None
-                pos_hint: {"center_x": .5, "center_y": .9}
+Screen:
 
-            MDTextButton:
-                icon: "content-save"
-                text: "Удалить"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_release:
-                    app.delbase()
+    MDNavigationLayout:
 
-        Screen:
-            name: "create"
-            MDIconButton:
-                id: sic
-                icon: "C:/Search-master/Икон/Image.png"
-                pos_hint: {"center_x": .2, "center_y": .85}
-                user_font_size: "70sp"
-                on_release:
-                    app.file_image(1)
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .95}
-                on_release:
-                    app.screen("scr 1")
-            MDTextField:
-                id: famali
-                hint_text: "Фамилия преподователя"
-                size_hint: .6, None
-                text: ""
-                pos_hint: {"center_x": .66, "center_y": .9}
-            MDTextField:
-                id: name
-                hint_text: "Имя преподователя"
-                size_hint: .6, None
-                text: ""
-                pos_hint: {"center_x": .66, "center_y": .85}
-            MDTextField:
-                id: otchim
-                hint_text: "Отчество преподователя"
-                size_hint: .6, None
-                pos_hint: {"center_x": .66, "center_y": .80}
-            MDTextButton:
-                text: 'Пн'
-                pos_hint: {"center_x": .2, "center_y": .60}
-            MDTextButton:
-                text: 'Вт'
-                pos_hint: {"center_x": .3, "center_y": .60}
-            MDTextButton:
-                text: 'Ср'
-                pos_hint: {"center_x": .4, "center_y": .60}
-            MDTextButton:
-                text: 'Чт'
-                pos_hint: {"center_x": .5, "center_y": .60}
-            MDTextButton:
-                text: 'Пт'
-                pos_hint: {"center_x": .6, "center_y": .60}
-            MDTextButton:
-                text: 'Сб'
-                pos_hint: {"center_x": .7, "center_y": .60}
-            MDTextButton:
-                text: 'Вс'
-                pos_hint: {"center_x": .8, "center_y": .60}
-            MDTextField:
-                id: pn
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .2, "center_y": .55}
-            MDTextField:
-                id: vt
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .3, "center_y": .55}
-            MDTextField:
-                id: cr
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .4, "center_y": .55}
-            MDTextField:
-                id: cht
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .5, "center_y": .55}
-            MDTextField:
-                id: pt
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .6, "center_y": .55}
-            MDTextField:
-                id: sb
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .7, "center_y": .55}
-            MDTextField:
-                hint_text: "Гр"
-                size_hint: .05, None
-                pos_hint: {"center_x": .8, "center_y": .55}
-            MDTextField:
-                id: kvant
-                hint_text: "Квантум"
-                size_hint: .6, None
-                pos_hint: {"center_x": .5, "center_y": .70}
-            MDTextButton:
-                text: "Создать"
-                size_hint: .6, None
-                pos_hint: {"center_x": .75, "center_y": .45}
-                on_release:
-                    app.createbase()
+        ScreenManager:
+            id: screen_manager
+            Screen:
+                name: "name"
+                FitImage:
+                    source: "/Search-master/База/Икоон.jpg"
+                MDTextButton:
+                    text: "Детский технопарк"
+                    font_size: "25sp"
+                    pos_hint: {"center_x": .5, "center_y": .9}
+                MDTextButton:
+                    text: "«Кванториум»"
+                    font_size: "50sp"
+                    pos_hint: {"center_x": .5, "center_y": .85}
+                MDTextButton:
+                    text: "г.Новочебоксарск"
+                    font_size: "25sp"
+                    pos_hint: {"center_x": .5, "center_y": .8}
+                MDRaisedButton:
+                    text: "Войти"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    pos_hint: {"center_x": .5, "center_y": .35}
+                    on_press:
+                        app.screen("Enter")
+                MDTextButton:
+                    text: "Если нет,"
+                    custom_color: 0, 1, 0, 1
+                    pos_hint: {"center_x": .43, "center_y": .3}
+                MDTextButton:
+                    text: "Создать"
+                    color: 0, 0, 1, 1
+                    pos_hint: {"center_x": .57, "center_y": .3}
+                    on_press:
+                        app.screen("Creatbs")
 
-        Screen:
-            name: "setting"
-            MDIconButton:
-                id: cin
-                icon: "C:/Search-master/Икон/Image.png"
-                pos_hint: {"center_x": .2, "center_y": .85}
-                user_font_size: "70sp"
-                on_release:
-                    app.file_image(0)
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_x": .1, "center_y": .95}
-                on_release:
-                    app.screen("search")
-            MDTextField:
-                id: nameac
-                size_hint: .6, None
-                text: ""
-                pos_hint: {"center_x": .66, "center_y": .9}
+            Screen:
+                name: "Enter"
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .9}
+                    on_release:
+                        app.screen("name")
+                MDTextField:
+                    id: login
+                    size_hint_x: None
+                    width: "400dp"
+                    hint_text: "Login"
+                    pos_hint: {"center_x": .5, "center_y": .7}
+                MDTextField:
+                    id: password
+                    size_hint_x: None
+                    width: "400dp"
+                    hint_text: "Password"
+                    pos_hint: {"center_x": .5, "center_y": .6}
+                MDRaisedButton:
+                    text: "Войти"
+                    pos_hint: {"center_x": .5, "center_y": .3}
+                    on_release:
+                        app.log_in()
 
-            MDTextField:
-                id: ageac
-                size_hint: .6, None
-                text: ""
-                pos_hint: {"center_x": .66, "center_y": .8}
+            Screen:
+                name: "Creatbs"
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .95}
+                    on_release:
+                        app.screen("name")
+                MDIconButton:
+                    id: sics
+                    icon: "C:/Search-master/Икон/Image.png"
+                    pos_hint: {"center_x": .2, "center_y": .85}
+                    user_font_size: "70sp"
+                    on_release:
+                        app.file_image(0)
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .95}
+                    on_release:
+                        app.screen("admin")
+                MDTextField:
+                    id: famalis
+                    hint_text: "Фамилия преподователя"
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .9}
+                MDTextField:
+                    id: nameas
+                    hint_text: "Имя преподователя"
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .85}
+                MDTextField:
+                    id: otchims
+                    hint_text: "Отчество преподователя"
+                    size_hint: .6, None
+                    pos_hint: {"center_x": .66, "center_y": .80}
+                MDTextField:
+                    id: log
+                    size_hint_x: None
+                    width: "400dp"
+                    hint_text: "Login"
+                    pos_hint: {"center_x": .5, "center_y": .7}
+                MDTextField:
+                    id: pase
+                    size_hint_x: None
+                    width: "400dp"
+                    hint_text: "Password"
+                    pos_hint: {"center_x": .5, "center_y": .6}
+                MDTextField:
+                    id: age
+                    size_hint_x: None
+                    width: "400dp"
+                    hint_text: "Возраст"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                MDRaisedButton:
+                    text: "Создать"
+                    pos_hint: {"center_x": .5, "center_y": .3}
+                    on_release:
+                        app.registration()
+
+
+
+            Screen:
+                name: "search"
+                MDBottomNavigation:
+                    panel_color: .2, .2, .2, 1
+
+                    MDBottomNavigationItem:
+                        name: 'screen 1'
+                        text: 'О нас'
+                        icon: 'language-python'
+                        MDGridLayout:
+                            cols: 3
+                            adaptive_height: True
+                            padding: dp(4), dp(4)
+                            spacing: dp(4)
+
+                            MyTile:
+                                stars: 5
+                                source: "cat-1.jpg"
+
+                            MyTile:
+                                stars: 5
+                                source: "cat-2.jpg"
+
+                            MyTile:
+                                stars: 5
+                                source: "cat-3.jpg"
+
+
+                    MDBottomNavigationItem:
+                        name: 'screen 2'
+                        text: 'Дом'
+                        icon: 'home'
+                        MDIconButton:
+                            icon: "arrow-left"
+                            pos_hint: {"center_x": .1, "center_y": .9}
+                            on_release:
+                                app.screen("name")
+                        MDTextField:
+                            id: poisks
+                            hint_text: "Поиск"
+                            size_hint: .6, None
+                            pos_hint: {"center_x": .51, "center_y": .9}
+
+
+
+                        MDIconButton:
+                            icon: "search-web"
+                            pos_hint: {"center_x": .8, "center_y": .9}
+                            on_release:
+                                app.show_example_grid_bottom_sheet()
+                        MDIconButton:
+                            id: acc
+                            icon: "account-circle-outline"
+                            font_size: "60sp"
+                            pos_hint: {"center_x": .9, "center_y": .909}
+                            on_release:
+                                app.account()
+                                app.screen("setting")
+
+
+                    MDBottomNavigationItem:
+                        name: 'screen 3'
+                        text: 'Записатся'
+                        icon: 'language-javascript'
+            Screen:
+                name: "search-enter"
+
+                ScrollView:
+                    FloatLayout:
+                        id: md_list
+                        MDRaisedButton:
+                            md_bg_color: 0, 0, 0, 1
+                            pos_hint: {"center_x": .5, "center_y": .98}
+                            size_hint: 1, .3
+                        MDIconButton:
+                            icon: "arrow-left"
+                            pos_hint: {"center_x": .08, "center_y": .95}
+                            on_release:
+                                app.screen("search")
+                        MDIconButton:
+                            id: img
+                            icon: ""
+                            pos_hint: {"center_x": .25, "center_y": .92}
+                            user_font_size: "60sp"
+                        MDFlatButton:
+                            id: real
+                            text: ""
+                            pos_hint: {"center_x": .66, "center_y": .92}
+                            font_style:"Button"
+                            font_size: "19sp"
+        #                MDTextField:
+        #                    id: ops
+        #                    mode:"fill"
+        #                    pos_hint: {"center_x": .5, "center_y": .4}
+        #                    size_hint: .8, None
+        #                    multiline: True
+        #                MDTextField:
+        #                    id: obs
+        #                    mode: "fill"
+        #                    pos_hint: {"center_x": .5, "center_y": .65}
+        #                    size_hint: .8, None
+        #                    multiline: True,
+                        MDTextButton:
+                            text: "Расписание занятий:"
+                            pos_hint: {"center_x": .2, "center_y": .8}
+
+
+            Screen:
+                name: "admin"
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .9}
+                    on_release:
+                        app.screen("name")
+                MDTextButton:
+                    text: "Создать"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    pos_hint: {"center_x": .5, "center_y": .6}
+                    on_press:
+                        app.screen("create")
+                MDTextButton:
+                    text: "Удалить"
+                    custom_color: 0, 1, 0, 1
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_press:
+                        app.screen("delete")
+
+
+
+            Screen:
+                name: "delete"
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .9}
+                    on_release:
+                        app.screen("admin")
+                MDTextField:
+                    id: delete
+                    hint_text: "Что удалить?"
+                    size_hint: .6, None
+                    pos_hint: {"center_x": .5, "center_y": .9}
+
+                MDTextButton:
+                    icon: "content-save"
+                    text: "Удалить"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_release:
+                        app.delbase()
+
+            Screen:
+                name: "create"
+                MDIconButton:
+                    id: sic
+                    icon: "C:/Search-master/Икон/Image.png"
+                    pos_hint: {"center_x": .2, "center_y": .85}
+                    user_font_size: "70sp"
+                    on_release:
+                        app.file_image(1)
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .95}
+                    on_release:
+                        app.screen("admin")
+                MDTextField:
+                    id: famali
+                    hint_text: "Фамилия преподователя"
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .9}
+                MDTextField:
+                    id: name
+                    hint_text: "Имя преподователя"
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .85}
+                MDTextField:
+                    id: otchim
+                    hint_text: "Отчество преподователя"
+                    size_hint: .6, None
+                    pos_hint: {"center_x": .66, "center_y": .80}
+                MDTextField:
+                    id: kvant
+                    mode: "rectangle"
+                    hint_text: "Квантум"
+                    size_hint: .6, None
+                    pos_hint: {"center_x": .5, "center_y": .75}
+                MDTextField:
+                    id: ob
+                    hint_text: "Образование"
+                    mode: "rectangle"
+                    multiline: True
+                    pos_hint: {"center_x": .5, "center_y": .7}
+                    size_hint: .6, None
+                MDTextField:
+                    id: op
+                    hint_text: "Основное направление"
+                    mode: "rectangle"
+                    multiline: True
+                    pos_hint: {"center_x": .5, "center_y": .65}
+                    size_hint: .6, None
+                MDTextButton:
+                    text: "Понедельник"
+                    pos_hint: {"center_x": .25, "center_y": .50}
+                MDTextButton:
+                    text: "гр.1"
+                    pos_hint: {"center_x": .5, "center_y": .55}
+                MDTextField:
+                    id: pn1
+                    hint_text: "Время"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "гр.2"
+                    pos_hint: {"center_x": .75, "center_y": .55}
+                MDTextField:
+                    id: pn2
+                    hint_text: "Время"
+                    pos_hint: {"center_x": .75, "center_y": .5}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Вторник"
+                    pos_hint: {"center_x": .25, "center_y": .45}
+                MDTextField:
+                    id: vt1
+                    hint_text: "Время"
+                    pos_hint: {"center_x": .5, "center_y": .45}
+                    size_hint: .1, None
+                MDTextField:
+                    id: vt2
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .75, "center_y": .45}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Среда"
+                    pos_hint: {"center_x": .25, "center_y": .40}
+                MDTextField:
+                    id: cr1
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .5, "center_y": .4}
+                    size_hint: .1, None
+                MDTextField:
+                    id: cr2
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .75, "center_y": .4}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Четверг"
+                    pos_hint: {"center_x": .25, "center_y": .35}
+                MDTextField:
+                    id: cht1
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .5, "center_y": .35}
+                    size_hint: .1, None
+                MDTextField:
+                    id: cht2
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .75, "center_y": .35}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Пятница"
+                    pos_hint: {"center_x": .25, "center_y": .30}
+                MDTextField:
+                    id: pt1
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .5, "center_y": .3}
+                    size_hint: .1, None
+                MDTextField:
+                    id: pt2
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .75, "center_y": .3}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Суббота"
+                    pos_hint: {"center_x": .25, "center_y": .25}
+                MDTextField:
+                    id: cb1
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .5, "center_y": .25}
+                    size_hint: .1, None
+                MDTextField:
+                    id: cb2
+                    hint_text: " Время"
+                    pos_hint: {"center_x": .75, "center_y": .25}
+                    size_hint: .1, None
+                MDTextButton:
+                    text: "Создать"
+                    size_hint: .6, None
+                    pos_hint: {"center_x": .75, "center_y": .10}
+                    on_release:
+                        app.createbase()
+
+            Screen:
+                name: "setting"
+                MDIconButton:
+                    id: cin
+                    icon: "/Search-master/Икон/Image.png"
+                    pos_hint: {"center_x": .2, "center_y": .85}
+                    user_font_size: "70sp"
+                    on_release:
+                        app.file_image(0)
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_x": .1, "center_y": .95}
+                    on_release:
+                        app.screen("search")
+                MDFlatButton:
+                    id: nameac
+                    text: ""
+                    font_style: "Button"
+                    font_size: "18sp"
+                    pos_hint: {"center_x": .66, "center_y": .9}
+
+
+                MDFlatButton:
+                    id: ageac
+                    text: ""
+                    font_size: "30sp"
+                    font_style: "Button"
+                    pos_hint: {"center_x": .42, "center_y": .8}
+                MDTextField:
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .9}
+
+                MDTextField:
+                    size_hint: .6, None
+                    text: ""
+                    pos_hint: {"center_x": .66, "center_y": .8}
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+
